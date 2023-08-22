@@ -953,7 +953,7 @@ Note: you may need to use the horizontal bottom scrollbar at the bottom of the w
 
 <br>
 
-Enter the Server name. Change Authentication to “Username and Password”, enter your login credentials, select role ACCOUNTADMIN & then click the blue “Sign in” button.
+Enter the Server name. Change the authentication method to username/password, enter your credentials & then click the blue “Sign in” button.
 
  ![A](assets/Tab_1.4.png)
 
@@ -962,8 +962,8 @@ Enter the Server name. Change Authentication to “Username and Password”, ent
 Within the connections pane, make the following selections:
 
 * Warehouse: VHOL_WH
-* Database: VHOL_DATABASE
-* Schema: VHOL_Schema
+* Database: FROSTBYTE_TASTY_BYTES
+* Schema: ANALYTICS
 
 
 A list of tables will appear:
@@ -972,17 +972,17 @@ A list of tables will appear:
 
 <br>
 
-Hover over the border of the Connections pane window until a black icon appears, then drag the “Connections” window to the right to make it wider. Widen the pane until you can read the full table names. Scroll down in the list of available tables until you find a table called “VHOL_Trips_Stations_Weather_VW”.
-
  ![A](assets/Tab_1.6.png)
 
 <br>
 
-Drag that table out onto the main section of the screen, where it says “Drag tables here”.
+Click and drag the 'ORDERS_V' table where it says “Drag tables here”.
 
  ![A](assets/Tab_1.7.png)
 
 <br>
+
+Next, click and drag the 'DAILY_CITY_WEATHER_V' to the Canvas. You'll create a relationship. Make sure that the fields are mapped correctly by matching 'Date' and 'Date' and matching 'City Name' and 'City'.
 
 <!-- ------------------------ -->
 
@@ -1006,36 +1006,32 @@ On the bottom left of the pop-up “Edit Data Source Filters” window, click �
 
 <br>
 
-Within the pop-up, start typing “Start Station”. Click the “Start Station” field.
+Within the pop-up, start typing “Date”. Click the “Date” field.
 
  ![A](assets/Tab_2.3.png)
 
 <br>
 
-When the list of Station Names appear, click “Null”, then click “Exclude selected values”. After that, click the blue “OK” button in the bottom right of the pop-up.
+When the options for different types of date filters appear, click “Relative Date”, then click “Years” and change the criteria to 'Last 2 Years'. After that, click the blue “OK” button in the bottom right of the pop-up. Then click 'OK' once you see the list of all data source filters.
 
  ![A](assets/Tab_2.4.png)
 
 <br>
 
-Repeat these steps for “End Station”; Add Filter → search “End Station” → click Null → Exclude selected values → OK.
  ![A](assets/Tab_2.5.png)
 
 <br>
 
-Lastly, repeat the same steps steps for “Start Borough”; Add Filter → search “Start Borough” → click Null → Exclude selected values → OK.
 
  ![A](assets/Tab_2.6.png)
 
 <br>
 
-All 3 Data Source filters should appear within the “Edit Data Source Filters” window, and the “Details” column of the table confirms we are excluding Nulls. Once you’ve confirmed the data source filters have been set correctly, click the blue “OK” button in the bottom right of the “Edit Data Source Filters” window.
 
  ![A](assets/Tab_2.7.png)
 
 <br>
 
-We have successfully filtered out incomplete trips or trips without a documented start borough.
 
 <br>
 
@@ -1053,49 +1049,40 @@ Now we are ready to visualize our data! In the bottom left of the screen, click 
 
 <br>
 
-Let’s start by creating a simple calculation to count the number of trips in our data set. In the upper toolbar (the toolbar that contains “File”, locate the “Analysis” tab. Within the “Analysis” dropdown, click “Create Calculated Field...”
+Let's start by visualizing the Sales Data for each city over time. I'll first find the 'Order Total' Field on the left hand pane under the 'Orders_V' table dropdown, and double click the field. This will automatically add the field to the canvas, and visualize it in the most optimal way. In this case, it will sum up the Order Totals and present it in a bar chart. If we translated this to SQL, it would be 'select sum(Order_Totals) from orders_v'.
 
  ![A](assets/Tab_3.2.png)
 
 <br>
 
-Change the name of the calculation from “Calculation1” to “Trip Journey”. Click into the blank calculation window below; once a flashing cursor appears, type:
+Now, lets start to bucket or group the order totals by another metric. I'll use date in this case. Drag the Date field from the Orders_v table on the left hand side to the Columns shelf. You'll see that Tableau automatically aggregates dates up to the year level first. Let's change that to a more granular aggregation, since we are only working with 2 years of data.
 
-```
-MAKELINE([Start Geo],[End Geo])
-```
-
-This calculation is creating a line between the station a rider began the ride, and the station a rider ended their ride, effectively plotting the journey they made.
-
-Locate the new “Trip Journey” field within the left Data pane. Immediately after you close the calculated field window, Trip Journey will be highlighted in blue. When a field is blue in Tableau, it means it is a dimension or, in this case, a categorical geographic field.
+By clicking the blue pill that says 'Year(Date)', we can see multiple options for aggregating the date. The first set of year/month/day will aggregate in a discrete manner. For example, if i selected 'Month', it would aggregate the Order Totals for all the months of 2021, Jan 2022, Jan 2023, etc. The second set of 'year/month/day' will create a continuous time series of order totals. Let's select 'Week' from the 2nd set. You'll see a line chart appear with data on Order Totals from 2022-2023.
 
  ![A](assets/Tab_3.3.png)
 
 <br>
 
-Click and drag the Trip Journey field into the workspace, where it says “drop field here”. Tableau is going to spin for a moment here, but it shouldn’t take more than 45-60 seconds. Not only is this complex spatial data, but it’s the first time Tableau is indexing it or storing it in its cache — this initial ingestion step is the only time it will take this long to render.
-
-Upon rendering, you’ll notice that Tableau not only automatically creates a map for us, but also plots a line between the start location and the end location.
+Now, Finally, lets split out the line chart further and break it down by City. We can add a third field to the visualization by adding 'City' to Color on the marks card. This will break out the data by each city and assign it a different color. You'll see the legend on the right hand side pop up.
 
  ![A](assets/Tab_3.4.png)
 
 <br>
 
-If you hover over the map, you will notice that Tableau is grouping all of the trips together into one single Mark. By adding layers of detail, we can isolate each individual trip.
-
-The first Detail we will add is “Start Station”. Locate the “Start Station” field in the Data pane, and drag it onto the “Detail” icon within the Marks card. Tableau will spin for a bit, but it shouldn’t take more than 30-45 seconds to render.
+I can see that there's more than one city with a massive drop in sales in March. These are Berlin, New York City, and Hamburg (Hamburg which we already visualized in snowflake). Let's add a filter so that I can narrow it down to those three cities. I'll drag the 'City' field to the filters card. When the filter card pops up, I'll select just a few cities, including Berlin, NYC and Hamburg. and Paris had a few fluctuations in sales as well.
 
  ![A](assets/Tab_3.5.png)
 
 <br>
 
-Repeat the steps above with “End Station”. Locate the “End Station” field within the Data pane, then drag it onto Detail. Tableau will spin for a bit, but it shouldn’t take more than 30-45 seconds to render.
+Great. Let's see if they also had high wind speed during those days and months with lower sales. I'll duplicate the sheet by right-clicking the bar along the bottom and selecting 'Duplicate'. Then, I'll make sure that max wind speed is averaged by right clicking the field and selecitng 'Data properties' -> 'Aggregation' -> Avg. Then, drag out the max wind speed field to Rows. This may take a few minutes to render.
 
  ![A](assets/Tab_3.6.png)
 
 <br>
 
-Now hover over any of the marks on the map. You will see we’ve effectively isolated the different trips, creating a mark for each journey.
+We can see that the avg wind speed does seem to have a negative correlation with order totals. In order to further investigate the pattern, we can actually very quickly check the trends of the lines by reversing the axis. I'll right-click the y-axis for the wind speed, go to 'Edit Axis' and checked the 'reversed' box.
+
 
  ![A](assets/Tab_3.7.png)
 

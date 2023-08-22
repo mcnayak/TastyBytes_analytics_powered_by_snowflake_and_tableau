@@ -29,20 +29,20 @@ CREATE OR REPLACE WAREHOUSE demo_build_wh
 COMMENT = 'demo build warehouse for frostbyte assets';
     
 CREATE OR REPLACE WAREHOUSE tasty_de_wh
-    WAREHOUSE_SIZE = 'xsmall'
+   WAREHOUSE_SIZE = 'xsmall'
     WAREHOUSE_TYPE = 'standard'
     AUTO_SUSPEND = 60
     AUTO_RESUME = TRUE
     INITIALLY_SUSPENDED = TRUE
-COMMENT = 'data engineering warehouse for tasty bytes';
+COMMENT = 'data engineering warehouse for tasty bytes'; 
 
-CREATE OR REPLACE WAREHOUSE tasty_ds_wh
+/* CREATE OR REPLACE WAREHOUSE tasty_ds_wh
     WAREHOUSE_SIZE = 'xsmall'
     WAREHOUSE_TYPE = 'standard'
     AUTO_SUSPEND = 60
     AUTO_RESUME = TRUE
     INITIALLY_SUSPENDED = TRUE
-COMMENT = 'data science warehouse for tasty bytes';
+COMMENT = 'data science warehouse for tasty bytes'; */
 
 CREATE OR REPLACE WAREHOUSE tasty_bi_wh
     WAREHOUSE_SIZE = 'xsmall'
@@ -52,7 +52,7 @@ CREATE OR REPLACE WAREHOUSE tasty_bi_wh
     INITIALLY_SUSPENDED = TRUE
 COMMENT = 'business intelligence warehouse for tasty bytes';
 
-CREATE OR REPLACE WAREHOUSE tasty_dev_wh
+/* CREATE OR REPLACE WAREHOUSE tasty_dev_wh
     WAREHOUSE_SIZE = 'xsmall'
     WAREHOUSE_TYPE = 'standard'
     AUTO_SUSPEND = 60
@@ -66,7 +66,7 @@ CREATE OR REPLACE WAREHOUSE tasty_data_app_wh
     AUTO_SUSPEND = 60
     AUTO_RESUME = TRUE
     INITIALLY_SUSPENDED = TRUE
-COMMENT = 'data app warehouse for tasty bytes';
+COMMENT = 'data app warehouse for tasty bytes'; */
 
 -- create roles
 USE ROLE securityadmin;
@@ -78,25 +78,22 @@ CREATE ROLE IF NOT EXISTS tasty_admin
 CREATE ROLE IF NOT EXISTS tasty_data_engineer
     COMMENT = 'data engineer for tasty bytes';
       
-CREATE ROLE IF NOT EXISTS tasty_data_scientist
-    COMMENT = 'data scientist for tasty bytes';
+/* CREATE ROLE IF NOT EXISTS tasty_data_scientist
+    COMMENT = 'data scientist for tasty bytes'; */
     
 CREATE ROLE IF NOT EXISTS tasty_bi
     COMMENT = 'business intelligence for tasty bytes';
     
-CREATE ROLE IF NOT EXISTS tasty_data_app
-    COMMENT = 'data application developer for tasty bytes';
+/* CREATE ROLE IF NOT EXISTS tasty_data_app
+    COMMENT = 'data application developer for tasty bytes'; 
     
 CREATE ROLE IF NOT EXISTS tasty_dev
-    COMMENT = 'developer for tasty bytes';
+    COMMENT = 'developer for tasty bytes'; */
     
 -- role hierarchy
 GRANT ROLE tasty_admin TO ROLE sysadmin;
 GRANT ROLE tasty_data_engineer TO ROLE tasty_admin;
---GRANT ROLE tasty_data_scientist TO ROLE tasty_admin;
 GRANT ROLE tasty_bi TO ROLE tasty_admin;
---GRANT ROLE tasty_data_app TO ROLE tasty_admin;
---GRANT ROLE tasty_dev TO ROLE tasty_data_engineer;
 
 -- privilege grants
 USE ROLE accountadmin;
@@ -109,120 +106,79 @@ USE ROLE securityadmin;
 
 GRANT USAGE ON DATABASE frostbyte_tasty_bytes TO ROLE tasty_admin;
 GRANT USAGE ON DATABASE frostbyte_tasty_bytes TO ROLE tasty_data_engineer;
---GRANT USAGE ON DATABASE frostbyte_tasty_bytes TO ROLE tasty_data_scientist;
+
 GRANT USAGE ON DATABASE frostbyte_tasty_bytes TO ROLE tasty_bi;
---GRANT USAGE ON DATABASE frostbyte_tasty_bytes TO ROLE tasty_data_app;
---GRANT USAGE ON DATABASE frostbyte_tasty_bytes TO ROLE tasty_dev;
 
 GRANT USAGE ON ALL SCHEMAS IN DATABASE frostbyte_tasty_bytes TO ROLE tasty_admin;
 GRANT USAGE ON ALL SCHEMAS IN DATABASE frostbyte_tasty_bytes TO ROLE tasty_data_engineer;
---GRANT USAGE ON ALL SCHEMAS IN DATABASE frostbyte_tasty_bytes TO ROLE tasty_data_scientist;
+
 GRANT USAGE ON ALL SCHEMAS IN DATABASE frostbyte_tasty_bytes TO ROLE tasty_bi;
---GRANT USAGE ON ALL SCHEMAS IN DATABASE frostbyte_tasty_bytes TO ROLE tasty_data_app;
---GRANT USAGE ON ALL SCHEMAS IN DATABASE frostbyte_tasty_bytes TO ROLE tasty_dev;
 
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_admin;
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_data_engineer;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_data_scientist;
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_bi;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_data_app;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_dev;
 
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_admin;
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_engineer;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_scientist;
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_bi;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_app;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_dev;
 
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_admin;
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_engineer;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_scientist;
 GRANT ALL ON SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_bi;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_app;
---GRANT ALL ON SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_dev;
 
 -- warehouse grants
 GRANT ALL ON WAREHOUSE demo_build_wh TO ROLE sysadmin;
 
 GRANT OWNERSHIP ON WAREHOUSE tasty_de_wh TO ROLE tasty_admin REVOKE CURRENT GRANTS;
 GRANT ALL ON WAREHOUSE tasty_de_wh TO ROLE tasty_admin;
---GRANT ALL ON WAREHOUSE tasty_de_wh TO ROLE tasty_data_engineer;
-
-GRANT ALL ON WAREHOUSE tasty_ds_wh TO ROLE tasty_admin;
---GRANT ALL ON WAREHOUSE tasty_ds_wh TO ROLE tasty_data_scientist;
-
---GRANT ALL ON WAREHOUSE tasty_data_app_wh TO ROLE tasty_admin;
---GRANT ALL ON WAREHOUSE tasty_data_app_wh TO ROLE tasty_data_app;
-
+GRANT ALL ON WAREHOUSE tasty_de_wh TO ROLE tasty_data_engineer;
 GRANT ALL ON WAREHOUSE tasty_bi_wh TO ROLE tasty_admin;
 GRANT ALL ON WAREHOUSE tasty_bi_wh TO ROLE tasty_bi;
-
+/* 
 GRANT ALL ON WAREHOUSE tasty_dev_wh TO ROLE tasty_admin;
 GRANT ALL ON WAREHOUSE tasty_dev_wh TO ROLE tasty_data_engineer;
---GRANT ALL ON WAREHOUSE tasty_dev_wh TO ROLE tasty_dev;
+GRANT ALL ON WAREHOUSE tasty_dev_wh TO ROLE tasty_dev; */
 
 -- future grants
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_admin;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_data_engineer;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_data_scientist;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_bi;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_data_app;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_pos TO ROLE tasty_dev;
 
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_customer TO ROLE tasty_admin;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_customer TO ROLE tasty_data_engineer;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_customer TO ROLE tasty_data_scientist;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_customer TO ROLE tasty_bi;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_customer TO ROLE tasty_data_app;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.raw_customer TO ROLE tasty_dev;
 
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_admin;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_engineer;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_scientist;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_bi;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_app;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_dev;
 
 GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_admin;
 GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_engineer;
---GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_scientist;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_bi;
---GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_data_app;
---GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_dev;
 
+GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.harmonized TO ROLE tasty_bi;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_admin;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_engineer;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_scientist;
 GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_bi;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_app;
---GRANT ALL ON FUTURE TABLES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_dev;
 
 GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_admin;
 GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_engineer;
---GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_scientist;
 GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_bi;
---GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_app;
---GRANT ALL ON FUTURE VIEWS IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_dev;
 
 GRANT ALL ON FUTURE FUNCTIONS IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_scientist;
 
 GRANT USAGE ON FUTURE PROCEDURES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_admin;
 GRANT USAGE ON FUTURE PROCEDURES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_engineer;
---GRANT USAGE ON FUTURE PROCEDURES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_scientist;
 GRANT USAGE ON FUTURE PROCEDURES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_bi;
---GRANT USAGE ON FUTURE PROCEDURES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_data_app;
---GRANT USAGE ON FUTURE PROCEDURES IN SCHEMA frostbyte_tasty_bytes.analytics TO ROLE tasty_dev;
 
 -- Apply Masking Policy Grants
 --GRANT CREATE TAG ON SCHEMA frostbyte_tasty_bytes.raw_customer TO ROLE tasty_admin;
 --GRANT CREATE TAG ON SCHEMA frostbyte_tasty_bytes.raw_customer TO ROLE tasty_data_engineer;
-
+/* 
 USE ROLE accountadmin;
 GRANT APPLY TAG ON ACCOUNT TO ROLE tasty_admin;
 GRANT APPLY TAG ON ACCOUNT TO ROLE tasty_data_engineer;
 GRANT APPLY MASKING POLICY ON ACCOUNT TO ROLE tasty_admin;
---GRANT APPLY MASKING POLICY ON ACCOUNT TO ROLE tasty_data_engineer;
+--GRANT APPLY MASKING POLICY ON ACCOUNT TO ROLE tasty_data_engineer;*/
   
 -- raw_pos table build
 USE ROLE sysadmin;
@@ -496,7 +452,7 @@ COPY INTO frostbyte_tasty_bytes.raw_pos.order_detail
 FROM @frostbyte_tasty_bytes.public.s3load/raw_pos/order_detail/;
 
 -- drop demo_build_wh
-DROP WAREHOUSE IF EXISTS demo_build_wh;
+-- DROP WAREHOUSE IF EXISTS demo_build_wh;
 
 -- setup completion note
 SELECT 'frostbyte_tasty_bytes setup is now complete' AS note;

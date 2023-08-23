@@ -953,9 +953,9 @@ Note: you may need to use the horizontal bottom scrollbar at the bottom of the w
 
 <br>
 
-Enter the Server name. Change the authentication method to username/password, enter your credentials & then click the blue “Sign in” button.
+Enter the Server name. Note that you will need to remove the 'https://' from the name (see screenshot). You can find the server name [insert instructions here] Change the authentication method to username/password, enter your credentials & then click the blue “Sign in” button.
 
- ![A](assets/Tab_1.4.png)
+ ![A](assets/no_https_in_server_name.png)
 
 <br>
 
@@ -968,21 +968,18 @@ Within the connections pane, make the following selections:
 
 A list of tables will appear:
 
- ![A](assets/Tab_1.5.png)
+ ![A](assets/select_tables.png)
 
-<br>
-
- ![A](assets/Tab_1.6.png)
 
 <br>
 
 Click and drag the 'ORDERS_V' table where it says “Drag tables here”.
 
- ![A](assets/Tab_1.7.png)
-
 <br>
 
-Next, click and drag the 'DAILY_CITY_WEATHER_V' to the Canvas. You'll create a relationship. Make sure that the fields are mapped correctly by matching 'Date' and 'Date' and matching 'City Name' and 'City'.
+Next, click and drag the 'DAILY_CITY_WEATHER_V' to the Canvas. This will create a relationship. In Tableau, a relationship is a flexible way to do multi-table analysis without creating one large flat table. Make sure that the fields are mapped correctly by matching 'Date' and 'Date' and matching 'City Name' and 'City'.
+
+![A](assets/relationship_map.png)
 
 <!-- ------------------------ -->
 
@@ -992,11 +989,11 @@ Next, click and drag the 'DAILY_CITY_WEATHER_V' to the Canvas. You'll create a r
 
 ## Configure Data Source Filters
 
-By adding data source filters, we can exclude any outliers that may hinder performance or skew our data. We are going to be adding 3 data source filters total.
+By adding data source filters, we can exclude any outliers that may hinder performance or skew our data. 
 
 In the top right corner of the screen, locate where it says “Filters”. Under “Filters”, there is a button that says “Add”. Click the “Add” button.
 
- ![A](assets/Tab_2.1.png)
+ ![A](assets/add_data_source_filter.png)
 
 <br>
 
@@ -1008,27 +1005,11 @@ On the bottom left of the pop-up “Edit Data Source Filters” window, click �
 
 Within the pop-up, start typing “Date”. Click the “Date” field.
 
- ![A](assets/Tab_2.3.png)
-
 <br>
 
 When the options for different types of date filters appear, click “Relative Date”, then click “Years” and change the criteria to 'Last 2 Years'. After that, click the blue “OK” button in the bottom right of the pop-up. Then click 'OK' once you see the list of all data source filters.
 
- ![A](assets/Tab_2.4.png)
-
-<br>
-
- ![A](assets/Tab_2.5.png)
-
-<br>
-
-
- ![A](assets/Tab_2.6.png)
-
-<br>
-
-
- ![A](assets/Tab_2.7.png)
+ ![A](assets/relative_date_filter_settings.png)
 
 <br>
 
@@ -1049,15 +1030,15 @@ Now we are ready to visualize our data! In the bottom left of the screen, click 
 
 <br>
 
-Let's start by visualizing the Sales Data for each city over time. I'll first find the 'Order Total' Field on the left hand pane under the 'Orders_V' table dropdown, and double click the field. This will automatically add the field to the canvas, and visualize it in the most optimal way. In this case, it will sum up the Order Totals and present it in a bar chart. If we translated this to SQL, it would be 'select sum(Order_Totals) from orders_v'.
+Let's start by visualizing the Sales Data for each city over time. Find the 'Order Total' Field on the left hand pane under the 'Orders_V' table dropdown, and double click the field. This will automatically add the field to the canvas, and visualize it in the most optimal way. In this case, it will sum up the Order Totals and present it in a bar chart. If we translated this to SQL, it would be 'select sum(Order_Totals) from orders_v'.
 
  ![A](assets/Tab_3.2.png)
 
 <br>
 
-Now, lets start to bucket or group the order totals by another metric. I'll use date in this case. Drag the Date field from the Orders_v table on the left hand side to the Columns shelf. You'll see that Tableau automatically aggregates dates up to the year level first. Let's change that to a more granular aggregation, since we are only working with 2 years of data.
+Now, lets start to bucket or group the order totals by another metric. We'll use date in this case. Drag the Date field from the Orders_v table on the left hand side to the Columns shelf. You'll see that Tableau automatically aggregates dates up to the year level first. Let's change that to a more granular aggregation, since we are only working with 2 years of data.
 
-By clicking the blue pill that says 'Year(Date)', we can see multiple options for aggregating the date. The first set of year/month/day will aggregate in a discrete manner. For example, if i selected 'Month', it would aggregate the Order Totals for all the months of 2021, Jan 2022, Jan 2023, etc. The second set of 'year/month/day' will create a continuous time series of order totals. Let's select 'Week Number' from the 2nd set. You'll see a line chart appear with data on Order Totals from 2022-2023.
+By clicking the blue pill that says 'Year(Date)', we can see multiple options for aggregating the date. The first set of year/month/day will aggregate in a discrete manner. For example, if we selected 'Month', Tableau would aggregate the Order Totals for all the months of 2021, Jan 2022, Jan 2023, etc. The second set of 'year/month/day' will create a continuous time series of order totals. Let's select 'Week Number' from the 2nd set. You'll see a line chart appear with data on Order Totals from 2022-2023.
 
  ![A](assets/Tab_3.3.png)
 
@@ -1069,15 +1050,15 @@ Now, Finally, lets split out the line chart further and break it down by City. W
 
 <br>
 
-I can see that there's more than one city with a massive drop in sales in March. These are Berlin, New York City, and Hamburg (Hamburg which we already visualized in snowflake). Let's add a filter so that I can narrow it down to those three cities. I'll drag the 'City' field to the filters card. When the filter card pops up, I'll select just a few cities, including Berlin, NYC and Hamburg. and Paris had a few fluctuations in sales as well.
+Looking at this line graph, here's more than one city with a massive drop in sales in March. These are Berlin, New York City, and Hamburg (Hamburg which we already visualized in snowflake). Let's add a filter so that I can narrow it down to those three cities. Drag the 'City' field to the filters card. When the filter card pops up, select just a few cities, including Berlin, NYC and Hamburg. aris had a few fluctuations in sales as well, so we can select the field as well.
 
  ![A](assets/Tab_3.5.png)
 
 <br>
 
-Great. Let's see if they also had high wind speed during those days and months with lower sales. I'll duplicate the sheet by right-clicking the bar along the bottom and selecting 'Duplicate'. Then, I'll make sure that max wind speed is averaged by right clicking the field and selecitng 'Data properties' -> 'Aggregation' -> Avg. Then, drag out the max wind speed field to Rows. This may take a few minutes to render.
+Great. Let's see if they also had high wind speed during those days and months with lower sales. Duplicate the sheet by right-clicking the bar along the bottom and selecting 'Duplicate'. Then, make sure that max wind speed is averaged by right clicking the field and selecitng 'Data properties' -> 'Aggregation' -> Avg. Then, drag out the 'Max Wind Speed' field to Rows. This may take a few minutes to render.
 
- ![A](assets/Tab_3.6.png)
+ ![A](assets/reversed_axis.png)
 
 <br>
 
@@ -1087,7 +1068,7 @@ We can see that the avg wind speed does seem to have somewhat of a negative corr
 
 <br>
 
-Hmm, it doesn't seem to look very similar, and I'm also seeing null values - NYC has no wind speed data. I can make a note to ask my data engineers about that later. For now, let's focus on the orders table of data and see what else we can glean.
+It doesn't seem to look very similar, and there's also some null values - NYC has no wind speed data. We can make a note to ask my data engineers about that later. For now, let's focus on the orders table of data and see what else we can glean.
 
 Let's look at truck performance across all cities. To do that, we'll measure performance by total sales, or 'Order Total' field. Drag out the 'Order Total' field onto the columns shelf. Then, click and drag 'Truck Name' to the rows shelf. Rename the sheet 'Food Truck Performance by Total Revenue'.
 
@@ -1097,7 +1078,7 @@ Let's also change the way the data is visualized. A bar chart is great, but ulti
 
 Next up we'll filter to just the top 10 products. To do that, drag 'Menu Item Name' from the data pane to the filters card. Navigate to the 'Top' tab and select 'By Field', then make sure that the filter grabs the top 10 by quantity. Rename the sheet 'Top Selling Menu Items'.
 
-Let's filter the truck performance to the top 5 trucks. Do the same thing as for products, but just grab the top 5 for truck names.
+Let's filter the truck performance to the top 5 trucks. Do the same thing as for products, but just grab the top 5 by Order Total for truck names.
 
 <!-- ------------------------ -->
 
@@ -1107,13 +1088,19 @@ Let's filter the truck performance to the top 5 trucks. Do the same thing as for
 
 ## Create a Dashboard
 
-We have all of this information, but lets put it all together to see if we can gain insights from looking at all of the separate information in one place. I'll click on the waffle icon in the bottom bar to create a new dashboard.
+We have all of this information, but lets put it all together to see if we can gain insights from looking at all of the separate information in one place. Click on the waffle icon in the bottom bar to create a new dashboard.
 
-Just like fields dragged onto the canvas, I can drag sheets onto the dashboard to compose it. Let's drag our Time series with just order totals out, then drag out 'Top Selling Products' and 'Food Truck Performance by Total Revenue' sheets. Finally, in order to make sure the filters carry over, I'll apply the City filter to all sheets using this data source. To do that, simply click the carrot icon on the selected City filter, then click 'Apply to Worksheets' -> 'All using this datasource'. Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items. Let's publish this dashboard to share this insight and feedback with others.
+Just like fields dragged onto the canvas, you can drag sheets onto the dashboard to compose them. Let's drag our Time series with just order totals out, then drag out 'Top Selling Products' and 'Food Truck Performance by Total Revenue' sheets. Finally, in order to make sure the filters carry over, apply the City filter to all sheets using this data source. To do that, simply click the carrot icon on the selected City filter, then click 'Apply to Worksheets' -> 'All using this datasource'. 
 
  ![A](assets/Tab_4.1.png)
 
+Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items. Rename the dashboard 'Tasty Bytes Sales Analysis'. Let's publish this dashboard to share this insight and feedback with others.
+
 <br>
+
+
+
+### Publish Dashboards and Create Data
 
 
 ### Embed the Dashboard into a Web Page

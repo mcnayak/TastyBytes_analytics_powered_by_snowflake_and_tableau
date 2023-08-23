@@ -1009,7 +1009,7 @@ Within the pop-up, start typing “Date”. Click the “Date” field.
 
 When the options for different types of date filters appear, click “Relative Date”, then click “Years” and change the criteria to 'Last 2 Years'. After that, click the blue “OK” button in the bottom right of the pop-up. Then click 'OK' once you see the list of all data source filters.
 
- ![A](assets/relative_date_filter_settings.png)
+ ![A](assets/relative_date_filter_config.png)
 
 <br>
 
@@ -1032,25 +1032,29 @@ Now we are ready to visualize our data! In the bottom left of the screen, click 
 
 Let's start by visualizing the Sales Data for each city over time. Find the 'Order Total' Field on the left hand pane under the 'Orders_V' table dropdown, and double click the field. This will automatically add the field to the canvas, and visualize it in the most optimal way. In this case, it will sum up the Order Totals and present it in a bar chart. If we translated this to SQL, it would be 'select sum(Order_Totals) from orders_v'.
 
- ![A](assets/Tab_3.2.png)
+ ![A](assets/drag_order_total_to_rows.png)
 
 <br>
 
 Now, lets start to bucket or group the order totals by another metric. We'll use date in this case. Drag the Date field from the Orders_v table on the left hand side to the Columns shelf. You'll see that Tableau automatically aggregates dates up to the year level first. Let's change that to a more granular aggregation, since we are only working with 2 years of data.
 
+ ![A](assets/drag_date_to_columns.png)
+
+
 By clicking the blue pill that says 'Year(Date)', we can see multiple options for aggregating the date. The first set of year/month/day will aggregate in a discrete manner. For example, if we selected 'Month', Tableau would aggregate the Order Totals for all the months of 2021, Jan 2022, Jan 2023, etc. The second set of 'year/month/day' will create a continuous time series of order totals. Let's select 'Week Number' from the 2nd set. You'll see a line chart appear with data on Order Totals from 2022-2023.
 
- ![A](assets/Tab_3.3.png)
+ ![A](assets/date_agg_options.png)
+ <br>
+ ![A](assets/change_week_agg.png)
+<br>
+
+Now, Finally, lets split out the line chart further and break it down by City. We can add a third field to the visualization by adding 'City' to Color on the marks card. This will break out the data by each city and assign it a different color. You'll see the legend on the right hand side pop up. Let's also rename this sheet by clicking on the 'Sheet 1' label on the bottom bar and renaming it 'City Sales by Week'.
+
+ ![A](assets/rename_sheet1.png)
 
 <br>
 
-Now, Finally, lets split out the line chart further and break it down by City. We can add a third field to the visualization by adding 'City' to Color on the marks card. This will break out the data by each city and assign it a different color. You'll see the legend on the right hand side pop up. Let's also rename this sheet by clicking on the 'Sheet 1' label on the bottom bar and renaming it 'Order Totals by Week'.
-
- ![A](assets/Tab_3.4.png)
-
-<br>
-
-Looking at this line graph, here's more than one city with a massive drop in sales in March. These are Berlin, New York City, and Hamburg (Hamburg which we already visualized in snowflake). Let's add a filter so that I can narrow it down to those three cities. Drag the 'City' field to the filters card. When the filter card pops up, select just a few cities, including Berlin, NYC and Hamburg. aris had a few fluctuations in sales as well, so we can select the field as well.
+Looking at this line graph, here's more than one city with a massive drop in sales in March. These are Berlin, New York City, and Hamburg (Hamburg which we already visualized in snowflake). Let's add a filter so that I can narrow it down to those three cities. Drag the 'City' field to the filters card. When the filter card pops up, select just a few cities, including Berlin, NYC and Hamburg. Paris had a few fluctuations in sales as well, so we can select the field as well.
 
  ![A](assets/Tab_3.5.png)
 
@@ -1058,13 +1062,12 @@ Looking at this line graph, here's more than one city with a massive drop in sal
 
 Great. Let's see if they also had high wind speed during those days and months with lower sales. Duplicate the sheet by right-clicking the bar along the bottom and selecting 'Duplicate'. Then, make sure that max wind speed is averaged by right clicking the field and selecitng 'Data properties' -> 'Aggregation' -> Avg. Then, drag out the 'Max Wind Speed' field to Rows. This may take a few minutes to render.
 
- ![A](assets/reversed_axis.png)
 
 <br>
 
 We can see that the avg wind speed does seem to have somewhat of a negative correlation with order totals. In order to further investigate the pattern, we can actually very quickly check the trends of the lines by reversing the axis. Right-click the y-axis for the wind speed, go to 'Edit Axis' and checked the 'reversed' box. You may expect the wind speed line to look similar to the Order Totals line.
 
- ![A](assets/Tab_3.7.png)
+  ![A](assets/reversed_axis.png)
 
 <br>
 
@@ -1092,7 +1095,7 @@ We have all of this information, but lets put it all together to see if we can g
 
 Just like fields dragged onto the canvas, you can drag sheets onto the dashboard to compose them. Let's drag our Time series with just order totals out, then drag out 'Top Selling Products' and 'Food Truck Performance by Total Revenue' sheets. Finally, in order to make sure the filters carry over, apply the City filter to all sheets using this data source. To do that, simply click the carrot icon on the selected City filter, then click 'Apply to Worksheets' -> 'All using this datasource'. 
 
- ![A](assets/Tab_4.1.png)
+ ![A](assets/apply_data_source_filter.png)
 
 Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items. Rename the dashboard 'Tasty Bytes Sales Analysis'. Let's publish this dashboard to share this insight and feedback with others.
 

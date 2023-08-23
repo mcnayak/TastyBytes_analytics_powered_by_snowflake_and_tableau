@@ -1057,13 +1057,13 @@ Let's start by visualizing the Sales Data for each city over time. I'll first fi
 
 Now, lets start to bucket or group the order totals by another metric. I'll use date in this case. Drag the Date field from the Orders_v table on the left hand side to the Columns shelf. You'll see that Tableau automatically aggregates dates up to the year level first. Let's change that to a more granular aggregation, since we are only working with 2 years of data.
 
-By clicking the blue pill that says 'Year(Date)', we can see multiple options for aggregating the date. The first set of year/month/day will aggregate in a discrete manner. For example, if i selected 'Month', it would aggregate the Order Totals for all the months of 2021, Jan 2022, Jan 2023, etc. The second set of 'year/month/day' will create a continuous time series of order totals. Let's select 'Week' from the 2nd set. You'll see a line chart appear with data on Order Totals from 2022-2023.
+By clicking the blue pill that says 'Year(Date)', we can see multiple options for aggregating the date. The first set of year/month/day will aggregate in a discrete manner. For example, if i selected 'Month', it would aggregate the Order Totals for all the months of 2021, Jan 2022, Jan 2023, etc. The second set of 'year/month/day' will create a continuous time series of order totals. Let's select 'Week Number' from the 2nd set. You'll see a line chart appear with data on Order Totals from 2022-2023.
 
  ![A](assets/Tab_3.3.png)
 
 <br>
 
-Now, Finally, lets split out the line chart further and break it down by City. We can add a third field to the visualization by adding 'City' to Color on the marks card. This will break out the data by each city and assign it a different color. You'll see the legend on the right hand side pop up.
+Now, Finally, lets split out the line chart further and break it down by City. We can add a third field to the visualization by adding 'City' to Color on the marks card. This will break out the data by each city and assign it a different color. You'll see the legend on the right hand side pop up. Let's also rename this sheet by clicking on the 'Sheet 1' label on the bottom bar and renaming it 'Order Totals by Week'.
 
  ![A](assets/Tab_3.4.png)
 
@@ -1081,20 +1081,21 @@ Great. Let's see if they also had high wind speed during those days and months w
 
 <br>
 
-We can see that the avg wind speed does seem to have a negative correlation with order totals. In order to further investigate the pattern, we can actually very quickly check the trends of the lines by reversing the axis. I'll right-click the y-axis for the wind speed, go to 'Edit Axis' and checked the 'reversed' box.
-
+We can see that the avg wind speed does seem to have somewhat of a negative correlation with order totals. In order to further investigate the pattern, we can actually very quickly check the trends of the lines by reversing the axis. Right-click the y-axis for the wind speed, go to 'Edit Axis' and checked the 'reversed' box. You may expect the wind speed line to look similar to the Order Totals line.
 
  ![A](assets/Tab_3.7.png)
 
 <br>
 
-Let's look at truck performance across all cities. To do that, we'll measure performance by total sales, or 'Order Total' field. Lets drag out the 'Order Total' field onto the columns shelf. Then, drag 'Truck Name' to the rows shelf.
+Hmm, it doesn't seem to look very similar, and I'm also seeing null values - NYC has no wind speed data. I can make a note to ask my data engineers about that later. For now, let's focus on the orders table of data and see what else we can glean.
+
+Let's look at truck performance across all cities. To do that, we'll measure performance by total sales, or 'Order Total' field. Drag out the 'Order Total' field onto the columns shelf. Then, click and drag 'Truck Name' to the rows shelf. Rename the sheet 'Food Truck Performance by Total Revenue'.
 
 Lastly, we want to see some of the top products. We'll measure by the quantity ordered. Open a new sheet, then drag 'Quantity' out onto the columns shelf. Drag 'Menu Item Name' onto the rows shelf. Then,  exclude the top to items, Bottled Soda and Bottled Water, since they are constants at every food truck. Do that by using command-click on both of the items, then selecting 'Exclude'.
 
 Let's also change the way the data is visualized. A bar chart is great, but ultimately, since the numbers are so high, the differences in bar lengths are a difficult to gague. we also need to add a label so that we can see the nuances between some of the top selling products. Drag another copy of sum(Quantity) to the label square on the marks card to add more detail.
 
-Next up we'll filter to just the top 10 products. To do that, I'll drag 'Menu Item Name' from the data pane to the filters card. I'll navigate to the 'Top' tab and select 'By Field', then make sure that we are grabbing the top 10 by quantity. 
+Next up we'll filter to just the top 10 products. To do that, drag 'Menu Item Name' from the data pane to the filters card. Navigate to the 'Top' tab and select 'By Field', then make sure that the filter grabs the top 10 by quantity. Rename the sheet 'Top Selling Menu Items'.
 
 Let's filter the truck performance to the top 5 trucks. Do the same thing as for products, but just grab the top 5 for truck names.
 
@@ -1108,7 +1109,7 @@ Let's filter the truck performance to the top 5 trucks. Do the same thing as for
 
 We have all of this information, but lets put it all together to see if we can gain insights from looking at all of the separate information in one place. I'll click on the waffle icon in the bottom bar to create a new dashboard.
 
-Just like fields dragged onto the canvas, I can drag sheets onto the dashboard to compose it. Let's drag our Time series with just order totals out, then drag out Top Selling Products and Top Trucks sheets. Finally, in order to make sure the filters carry over, I'll apply the City filter to all sheets using this data source. To do that, simply click the carrot icon on the selected City filter, then click 'Apply to Worksheets' -> 'All using this datasource'. Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items. Let's publish this dashboard to share this insight and feedback with others.
+Just like fields dragged onto the canvas, I can drag sheets onto the dashboard to compose it. Let's drag our Time series with just order totals out, then drag out 'Top Selling Products' and 'Food Truck Performance by Total Revenue' sheets. Finally, in order to make sure the filters carry over, I'll apply the City filter to all sheets using this data source. To do that, simply click the carrot icon on the selected City filter, then click 'Apply to Worksheets' -> 'All using this datasource'. Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items. Let's publish this dashboard to share this insight and feedback with others.
 
  ![A](assets/Tab_4.1.png)
 

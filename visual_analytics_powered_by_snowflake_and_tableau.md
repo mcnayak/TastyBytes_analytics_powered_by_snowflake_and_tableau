@@ -1130,7 +1130,11 @@ Let's filter the truck performance to the top 5 trucks. Do the same thing as for
 
  ![A](assets/truck_top_5_filter.png)
 
- ![A](assets/truck_top_5.png)
+Let's add a label to the bar charts, same as we did for the Top Selling Product sheet. Drag Order Totals to the labels tile on the marks card.
+
+ ![A](assets/truck_with_labels.png)
+
+
 <!-- ------------------------ -->
 
 <!-- ------------------------ -->

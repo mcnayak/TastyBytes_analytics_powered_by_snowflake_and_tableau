@@ -1081,16 +1081,56 @@ We can see that the avg wind speed does seem to have somewhat of a negative corr
 
 It doesn't seem to look very similar, and there's also some null values - NYC has no wind speed data. We can make a note to ask my data engineers about that later. For now, let's focus on the orders table of data and see what else we can glean.
 
-Let's look at truck performance across all cities. To do that, we'll measure performance by total sales, or 'Order Total' field. Drag out the 'Order Total' field onto the columns shelf. Then, click and drag 'Truck Name' to the rows shelf. Rename the sheet 'Food Truck Performance by Total Revenue'.
+Let's look at truck performance across all cities. To do that, we'll measure performance by total sales, or 'Order Total' field. Drag out the 'Order Total' field onto the columns shelf. 
 
-Lastly, we want to see some of the top products. We'll measure by the quantity ordered. Open a new sheet, then drag 'Quantity' out onto the columns shelf. Drag 'Menu Item Name' onto the rows shelf. Then,  exclude the top to items, Bottled Soda and Bottled Water, since they are constants at every food truck. Do that by using command-click on both of the items, then selecting 'Exclude'.
+ ![A](assets/reversed_axis.png)
+<br>
+
+Then, click and drag 'Truck Name' to the rows shelf. Rename the sheet 'Food Truck Performance by Total Revenue'.
+
+![A](assets/drag_out_truck.png)
+
+<br>
+
+Lastly, we want to see some of the top products. We'll measure by the quantity ordered. Open a new sheet, then drag 'Quantity' out onto the columns shelf. 
+ ![A](assets/drag_out_quantity.png)
+
+ <br>
+
+ Drag 'Menu Item Name' onto the rows shelf. 
+
+ ![A](assets/drag_out_menu_item_name.png)
+
+ <br>
+ 
+Then,  exclude the top three items, Ice Tea, Bottled Soda and Bottled Water, since they are constants at every food truck. Do that by using command-click on both of the items, then selecting 'Exclude'.
+
+![A](assets/exclude_drinks.png)
+  
+<br>
 
 Let's also change the way the data is visualized. A bar chart is great, but ultimately, since the numbers are so high, the differences in bar lengths are a difficult to gague. we also need to add a label so that we can see the nuances between some of the top selling products. Drag another copy of sum(Quantity) to the label square on the marks card to add more detail.
 
+![A](assets/quantity_label_marks_card.png)
+
+<br>
+
 Next up we'll filter to just the top 10 products. To do that, drag 'Menu Item Name' from the data pane to the filters card. Navigate to the 'Top' tab and select 'By Field', then make sure that the filter grabs the top 10 by quantity. Rename the sheet 'Top Selling Menu Items'.
+
+  ![A](assets/edit_filter.png)
+  
+  ![A](assets/top_10_products_filter.png)
+  
+ ![A](assets/rename_top_selling_products.png)
+
+
+<br>
 
 Let's filter the truck performance to the top 5 trucks. Do the same thing as for products, but just grab the top 5 by Order Total for truck names.
 
+ ![A](assets/truck_top_5_filter.png)
+
+ ![A](assets/truck_top_5.png)
 <!-- ------------------------ -->
 
 <!-- ------------------------ -->

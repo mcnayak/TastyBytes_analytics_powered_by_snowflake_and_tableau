@@ -1078,11 +1078,12 @@ Now, Finally, lets split out the line chart further and break it down by City. W
 
 Looking at this line graph, here's more than one city with a massive drop in sales in March. These are Berlin, New York City, and Hamburg (Hamburg which we already visualized in snowflake). Let's add a filter so that I can narrow it down to those three cities. Drag the 'City' field to the filters card. When the filter card pops up, select just a few cities, including Berlin, NYC and Hamburg. Paris had a few fluctuations in sales as well, so we can select the field as well.
 
- ![A](assets/Tab_3.5.png)
 
 <br>
 
 Great. Let's see if they also had high wind speed during those days and months with lower sales. Duplicate the sheet by right-clicking the bar along the bottom and selecting 'Duplicate'. Then, make sure that max wind speed is averaged by right clicking the field and selecitng 'Data properties' -> 'Aggregation' -> Avg. Then, drag out the 'Max Wind Speed' field to Rows. This may take a few minutes to render.
+
+ ![A](assets/default_aggregation.png)
 
 
 <br>
@@ -1101,7 +1102,7 @@ Let's look some of the most popular products. We'll measure by the quantity orde
 
  <br>
 
- Drag 'Menu Item Name' onto the rows shelf. 
+ Drag 'Menu Item Name' onto the rows shelf and sort the sheet by descending quantity. You can just click the sort icon next to Quantity label at the bottom.
 
  ![A](assets/drag_out_menu_item_name.png)
 
@@ -1119,7 +1120,7 @@ Let's also change the way the data is visualized. A bar chart is great, but ulti
 
 <br>
 
-Next up we'll filter to just the top 10 products. Drag 'Menu Item Name' from the data pane to the filters card. Navigate to the 'Top' tab and select 'By Field', then make sure that the filter grabs the top 10 by quantity. Rename the sheet 'Top Selling Menu Items'.
+Next up we'll filter to just the top 10 products. The Menu Item Name pill is already on the filter card, so right click and select 'Edit Filter' to open it up. Navigate to the 'Top' tab and select 'By Field', then make sure that the filter grabs the top 10 by quantity. Click OK. Rename the sheet 'Top Selling Menu Items'.
 
   ![A](assets/edit_filter.png)
   
@@ -1133,7 +1134,7 @@ Finally, Let's look at truck performance across all cities. To do that, we'll me
  ![A](assets/reversed_axis.png)
 <br>
 
-Then, click and drag 'Truck Name' to the rows shelf. Add a label to the bar charts, same as we did for the Top Selling Product sheet. Drag Order Totals to the labels tile on the marks card.
+Then, click and drag 'Truck Brand Name' to the rows shelf. Add a label to the bar charts, same as we did for the Top Selling Product sheet. Drag Order Totals to the labels tile on the marks card. Sort the sheet.
 
 ![A](assets/drag_out_truck.png)
 
@@ -1162,10 +1163,11 @@ Just like fields dragged onto the canvas, you can drag sheets onto the dashboard
 
  ![A](assets/apply_data_source_filter.png)
 
-Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items. Rename the dashboard 'Tasty Bytes Sales Analysis'. Let's publish this dashboard to share this insight and feedback with others.
+Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items vs most profitable trucks. Rename the dashboard 'Tasty Bytes Sales Analysis'. Click the checkbox in the bottom left corner that says 'Show dashboard title'.
 
 <br>
 
+Let's publish this dashboard to share this insight and feedback with others. I'll click 'Publish As' in the top right hand corner. 
 
 
 ### Publish Dashboards and Create Data

@@ -1036,7 +1036,21 @@ Now, this map shows us where we have data, but it doesn't tell us anything about
 
 We can see that there seems to be a fairly linear relationship between quantity and order total. We would expect that. Let's create a calculated field that gives us the ratio of products sold vs total revenue. If it's higher, that means that the city is selling more menu items that are less expensive, whereas lower ratio means that the food trucks are selling more expensive items. 
 
-We'll create a calculated field. 
+We'll create a calculated field by navigating to the data pane and right clicking on the carrot near the search bar. 
+
+Name your calculated field 'Quantity/Order Total Ratio' and enter in the text below:
+
+```
+SUM([Quantity])/SUM([Order Total])
+```
+Then, click OK. We'll replace the Quantity and Order total fields on the Color and Size marks card with this field. 
+
+Finally, change the color legend so it is more easily distinguishable. Right click the color legend and select 'Edit Colors'. Then, select the Orange-Blue diverging scale. Reverse the colors and close out of the dialog box.
+
+The reason we reversed the colors is that we want to keep a closer eye on cities with higher ratios. A higher quantity to order total ratio indicates that folks are buying more, cheaper items, as compared to higher-cost items. Of course, this data set does not include profit information, but it can be something we explore for a potential marketing campaign or GTM study on more expensive items vs more profitable items. 
+
+Rename the sheet 'Quantity to Order Total Ratio by City' by right-clicking on the Sheet1 label on the bottom bar and selecting 'Rename'.
+
 
 Let's open another sheet to do some more analysis. Start by visualizing the Sales Data for each city over time. Find the 'Order Total' Field on the left hand pane under the 'Orders_V' table dropdown, and double click the field. This will automatically add the field to the canvas, and visualize it in the most optimal way. In this case, it will sum up the Order Totals and present it in a bar chart. If we translated this to SQL, it would be 'select sum(Order_Totals) from orders_v'.
 
@@ -1081,18 +1095,8 @@ We can see that the avg wind speed does seem to have somewhat of a negative corr
 
 It doesn't seem to look very similar, and there's also some null values - NYC has no wind speed data. We can make a note to ask my data engineers about that later. For now, let's focus on the orders table of data and see what else we can glean.
 
-Let's look at truck performance across all cities. To do that, we'll measure performance by total sales, or 'Order Total' field. Drag out the 'Order Total' field onto the columns shelf. 
 
- ![A](assets/reversed_axis.png)
-<br>
-
-Then, click and drag 'Truck Name' to the rows shelf. Rename the sheet 'Food Truck Performance by Total Revenue'.
-
-![A](assets/drag_out_truck.png)
-
-<br>
-
-Lastly, we want to see some of the top products. We'll measure by the quantity ordered. Open a new sheet, then drag 'Quantity' out onto the columns shelf. 
+Let's look some of the most popular products. We'll measure by the quantity ordered. Open a new sheet, then drag 'Quantity' out onto the columns shelf. 
  ![A](assets/drag_out_quantity.png)
 
  <br>
@@ -1115,24 +1119,33 @@ Let's also change the way the data is visualized. A bar chart is great, but ulti
 
 <br>
 
-Next up we'll filter to just the top 10 products. To do that, drag 'Menu Item Name' from the data pane to the filters card. Navigate to the 'Top' tab and select 'By Field', then make sure that the filter grabs the top 10 by quantity. Rename the sheet 'Top Selling Menu Items'.
+Next up we'll filter to just the top 10 products. Drag 'Menu Item Name' from the data pane to the filters card. Navigate to the 'Top' tab and select 'By Field', then make sure that the filter grabs the top 10 by quantity. Rename the sheet 'Top Selling Menu Items'.
 
   ![A](assets/edit_filter.png)
   
   ![A](assets/top_10_products_filter.png)
   
  ![A](assets/rename_top_selling_products.png)
+ 
 
+Finally, Let's look at truck performance across all cities. To do that, we'll measure performance by total sales, or 'Order Total' field. Drag out the 'Order Total' field onto the columns shelf. 
+
+ ![A](assets/reversed_axis.png)
+<br>
+
+Then, click and drag 'Truck Name' to the rows shelf. Add a label to the bar charts, same as we did for the Top Selling Product sheet. Drag Order Totals to the labels tile on the marks card.
+
+![A](assets/drag_out_truck.png)
+
+![A](assets/truck_with_labels.png)
 
 <br>
 
-Let's filter the truck performance to the top 5 trucks. Do the same thing as for products, but just grab the top 5 by Order Total for truck names.
+Filter the truck performance to the top 5 trucks. Do the same thing as for products, but just grab the top 5 by Order Total for truck names.
 
  ![A](assets/truck_top_5_filter.png)
 
-Let's add a label to the bar charts, same as we did for the Top Selling Product sheet. Drag Order Totals to the labels tile on the marks card.
-
- ![A](assets/truck_with_labels.png)
+Rename the sheet 'Food Truck Performance by Total Revenue'.
 
 
 <!-- ------------------------ -->

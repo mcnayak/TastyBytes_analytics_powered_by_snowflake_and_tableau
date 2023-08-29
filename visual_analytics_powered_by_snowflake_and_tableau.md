@@ -25,7 +25,6 @@ Join Snowflake and Tableau for an instructor-led hands-on lab to build governed,
 
 * Load semi-structured data from external stage 
 * Incorporate Weather and Geospatial data from Snowflake Marketplace
-* Integrate and deliver multi-tenant tables and views in Snowflake.
 * Build visual, intuitive, and interactive data visualizations powered by live data in Snowflake.
 
 ### What You’ll Need
@@ -91,7 +90,7 @@ CREATE OR REPLACE SCHEMA frostbyte_tasty_bytes.analytics;
 CREATE OR REPLACE WAREHOUSE demo_build_wh
     WAREHOUSE_SIZE = 'xxxlarge'
     WAREHOUSE_TYPE = 'standard'
-    AUTO_SUSPEND = 60
+    AUTO_SUSPEND = 30
     AUTO_RESUME = TRUE
     INITIALLY_SUSPENDED = TRUE
 COMMENT = 'demo build warehouse for frostbyte assets';
@@ -105,7 +104,7 @@ CREATE OR REPLACE WAREHOUSE tasty_de_wh
 COMMENT = 'data engineering warehouse for tasty bytes';
 
 CREATE OR REPLACE WAREHOUSE tasty_bi_wh
-    WAREHOUSE_SIZE = 'xsmall'
+    WAREHOUSE_SIZE = 'small'
     WAREHOUSE_TYPE = 'standard'
     AUTO_SUSPEND = 60
     AUTO_RESUME = TRUE
@@ -772,7 +771,7 @@ Quickstart Section 4 - Harmonizing and Promoting First and Third Party Data
 -- Section 4: Step 1 - Enriching our Analytics View
 USE ROLE sysadmin;
 
-CREATE OR REPLACE VIEW frostbyte_tasty_bytes.analytics.orders_v
+CREATE OR REPLACE VIEW frostbyte_tasty_bytes.analytics.orders_v_spatial
 COMMENT = 'Tasty Bytes Order Detail View'
     AS
 SELECT 
@@ -799,7 +798,7 @@ SELECT TOP 10
     o.location_id,
     ST_MAKEPOINT(o.longitude, o.latitude) AS geo_point,
     SUM(o.price) AS total_sales_usd
-FROM frostbyte_tasty_bytes.analytics.orders_v o
+FROM frostbyte_tasty_bytes.analytics.orders_v_spatial o
 WHERE 1=1
     AND o.primary_city = 'Paris'
     AND YEAR(o.date) = 2022
@@ -814,7 +813,7 @@ WITH _top_10_locations AS
         o.location_id,
         ST_MAKEPOINT(o.longitude, o.latitude) AS geo_point,
         SUM(o.price) AS total_sales_usd
-    FROM frostbyte_tasty_bytes.analytics.orders_v o
+    FROM frostbyte_tasty_bytes.analytics.orders_v_spatial o
     WHERE 1=1
         AND o.primary_city = 'Paris'
         AND YEAR(o.date) = 2022
@@ -848,7 +847,7 @@ WITH _top_10_locations AS
         o.location_id,
         ST_MAKEPOINT(o.longitude, o.latitude) AS geo_point,
         SUM(o.price) AS total_sales_usd
-    FROM frostbyte_tasty_bytes.analytics.orders_v o
+    FROM frostbyte_tasty_bytes.analytics.orders_v_spatial o
     WHERE 1=1
         AND o.primary_city = 'Paris'
         AND YEAR(o.date) = 2022
@@ -870,7 +869,7 @@ WITH _top_10_locations AS
         o.location_id,
         ST_MAKEPOINT(o.longitude, o.latitude) AS geo_point,
         SUM(o.price) AS total_sales_usd
-    FROM frostbyte_tasty_bytes.analytics.orders_v o
+    FROM frostbyte_tasty_bytes.analytics.orders_v_spatial o
     WHERE 1=1
         AND o.primary_city = 'Paris'
         AND YEAR(o.date) = 2022
@@ -900,7 +899,7 @@ WITH _2022_paris_locations AS
         o.location_id,
         o.location_name,
         ST_MAKEPOINT(o.longitude, o.latitude) AS geo_point
-    FROM frostbyte_tasty_bytes.analytics.orders_v o
+    FROM frostbyte_tasty_bytes.analytics.orders_v_spatial o
     WHERE 1=1
         AND o.primary_city = 'Paris'
         AND YEAR(o.date) = 2022

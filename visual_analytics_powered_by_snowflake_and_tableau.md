@@ -529,7 +529,7 @@ Duration: 5
 ![Search Dataset](assets/Frostbyte_Weather_Data.png)
 
 ### Set database name to FROSTBYTE_WEATHERSOURCE, grant access to PUBLIC role
-![Add Database](assets/FrostByte_DB.png)
+![Add Database](assets/Frostbyte_DB.png)
 
 ```sql 
 -- Section 4: Step 2 - Harmonizing First and Third Party Data

@@ -1204,6 +1204,9 @@ Filter the truck performance to the top 5 trucks. Do the same thing as for produ
 
 Rename the sheet 'Food Truck Performance by Total Revenue'.
 
+ ![A](assets/finish_top_selling_products.png)
+ ![A](assets/finish_top_trucks_bar.png)
+
 
 <!-- ------------------------ -->
 

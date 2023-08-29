@@ -526,11 +526,10 @@ Duration: 5
 
 ### Click on data marketplace and type **Frostbyte** in search toolbar
 
- ![Search Dataset](assets/Frostbyte_Weather_Data.png)
+![Search Dataset](assets/Frostbyte_Weather_Data.png)
 
 ### Set database name to FROSTBYTE_WEATHERSOURCE, grant access to PUBLIC role
-
- ![Add Database and Role](assets/FrostByte_DB.png)
+![Add Database](assets/FrostByte_DB.png)
 
 ```sql 
 -- Section 4: Step 2 - Harmonizing First and Third Party Data
@@ -740,6 +739,7 @@ ORDER BY total_sales_usd DESC;
 
 ```
 ![Search Dataset](assets/Frostbyte_Spatial.png) 
+
 ```sql
 
 -- Section 3: Step 3 - Evaluating Safegraph POI Data

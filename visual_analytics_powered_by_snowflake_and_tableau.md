@@ -1047,13 +1047,17 @@ Now, this map shows us where we have data, but it doesn't tell us anything about
 
 We also want to filter to just one city at a time, because its hard to see the different truck locations when the map is zoomed out. Right-click City on the details tile and select 'Show Filter'. then, when the filter pops up on the right hand side, click the carrot on the right and select 'Single-Value (list)'. This will change the filter settings to only allow you to select one city at a time.
 
+![A](assets/show_filter_city_map.png)
+
+![A](assets/single_value_list.png)
+
 <br>
 
 We can see from clicking through different cities and the size of the circles and the color legend that there seems to be a fairly linear relationship between quantity and order total. We would expect that. Let's create a calculated field that gives us the ratio of products sold vs total revenue. If it's higher, that means that the city is selling more menu items that are less expensive, whereas lower ratio means that the food trucks are selling more expensive items. 
 
 We'll create a calculated field by navigating to the data pane and right clicking on the carrot near the search bar. 
 
- ![A](assets/Tab_3.1.png)
+ ![A](assets/create_calculated_field.png)
 
 <br>
 
@@ -1089,19 +1093,19 @@ Finally, change the color legend so it is more easily distinguishable. Right cli
 
 The reason we reversed the colors is that we want to keep a closer eye on trucks with higher ratios. A higher quantity to order total ratio indicates that folks are buying more, cheaper items, as compared to higher-cost items. Of course, this data set does not include profit information, but it can be something we explore for a potential marketing campaign or GTM study on more expensive items vs more profitable items. 
 
-Rename the sheet 'Quantity to Order Total Ratio by Truck in City' by right-clicking on the Sheet1 label on the bottom bar and selecting 'Rename'.
+Rename the sheet 'Quantity to Order Total Ratio by Truck' by right-clicking on the Sheet1 label on the bottom bar and selecting 'Rename'.
 
  ![A](assets/Tab_3.1.png)
 
 <br>
 
-Let's open another sheet to do some more analysis. Start by visualizing the Sales Data for each city over time. Find the 'Order Total' Field on the left hand pane under the 'Orders_V' table dropdown, and double click the field. This will automatically add the field to the canvas, and visualize it in the most optimal way. In this case, it will sum up the Order Totals and present it in a bar chart. If we translated this to SQL, it would be 'select sum(Order_Totals) from orders_v'.
+Let's open another sheet to do some more analysis. Click the + button on the bottom bar to open a new sheet. Start by visualizing the Sales Data for each city over time. Find the 'Order Total' Field on the left hand pane under the 'Orders_V' table dropdown, and double click the field. This will automatically add the field to the canvas, and visualize it in the most optimal way. In this case, it will sum up the Order Totals and present it in a bar chart. If we translated this to SQL, it would be 'select sum(Order_Totals) from Orders_V'.
 
  ![A](assets/drag_order_total_to_rows.png)
 
 <br>
 
-Now, lets start to bucket or group the order totals by another metric. We'll use date in this case. Drag the Date field from the Orders_v table on the left hand side to the Columns shelf. You'll see that Tableau automatically aggregates dates up to the year level first. Let's change that to a more granular aggregation, since we are only working with 2 years of data.
+Now, lets start to bucket or group the order totals by another metric. We'll use date in this case. From the left pane, drag the 'Date' field from the 'Orders_V' table to the Columns shelf. You'll see that Tableau automatically aggregates dates up to the year level first. Let's change that to a more granular aggregation, since we are only working with 2 years of data.
 
  ![A](assets/drag_date_to_columns.png)
 
@@ -1113,7 +1117,7 @@ By clicking the blue pill that says 'Year(Date)', we can see multiple options fo
  ![A](assets/change_week_agg.png)
 <br>
 
-Now, Finally, lets split out the line chart further and break it down by City. We can add a third field to the visualization by adding 'City' to Color on the marks card. This will break out the data by each city and assign it a different color. You'll see the legend on the right hand side pop up. Let's also rename this sheet by clicking on the 'Sheet 1' label on the bottom bar and renaming it 'City Sales by Week'.
+Now, let's split out the line chart further and break it down by City. We can add a third field to the visualization by adding 'City' to Color on the marks card. This will break out the data by each city and assign it a different color. You'll see the legend on the right hand side pop up. Let's also rename this sheet by clicking on the 'Sheet 2' label on the bottom bar and renaming it 'City Sales by Week'.
 
  ![A](assets/rename_sheet1.png)
 
@@ -1140,10 +1144,13 @@ We can see that the avg wind speed does seem to have somewhat of a negative corr
 
 <br>
 
-It doesn't seem to look very similar, and there's also some null values - NYC has no wind speed data. We can make a note to ask my data engineers about that later. For now, let's focus on the orders table of data and see what else we can glean.
+It doesn't seem to look very similar, and there's also some null values - NYC has no wind speed data. We can make a note to ask my data engineers about that later. Remove the Wind Speed field and the city filter from the visualization. Change the field from 'City' to 'Truck Brand Name' to get a sense of how the trucks are performing over time. Rename the sheet 'Truck Performance over Time'.
 
+![A](assets/Truck_Performance_over_Time.png)
 
-Let's look some of the most popular products. We'll measure by the quantity ordered. Open a new sheet, then drag 'Quantity' out onto the columns shelf. 
+<br>
+
+Now, let's look some of the most popular products. We'll measure by the quantity ordered. Open a new sheet, then drag 'Quantity' out onto the columns shelf. 
  ![A](assets/drag_out_quantity.png)
 
  <br>
@@ -1211,9 +1218,16 @@ Just like fields dragged onto the canvas, you can drag sheets onto the dashboard
 
 Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items vs most profitable trucks. Rename the dashboard 'Tasty Bytes Sales Analysis'. Click the checkbox in the bottom left corner that says 'Show dashboard title'.
 
+ ![A](assets/finished_dash.png)
+
 <br>
 
-Let's publish this dashboard to share this insight and feedback with others. Click 'Publish As' in the top right hand corner. Give your Dashboard a name and you can store it in your personal sandbox for now. Once you click save, the published dashboard should reload. 
+Let's publish this dashboard to share this insight and feedback with others. Click 'Publish As' in the top right hand corner. Give your Dashboard a name and you can store it in your personal space for now. Once you click save, the published dashboard should reload. 
+
+ ![A](assets/publish_as.png)
+
+ ![A](assets/name_workbook.png)
+
 
 
 <br>

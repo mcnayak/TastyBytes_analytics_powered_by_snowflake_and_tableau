@@ -1093,6 +1093,9 @@ Finally, change the color legend so it is more easily distinguishable. Right cli
 
 The reason we reversed the colors is that we want to keep a closer eye on trucks with higher ratios. A higher quantity to order total ratio indicates that folks are buying more, cheaper items, as compared to higher-cost items. Of course, this data set does not include profit information, but it can be something we explore for a potential marketing campaign or GTM study on more expensive items vs more profitable items. 
 
+![A](assets/finished_map.png)
+
+
 Rename the sheet 'Quantity to Order Total Ratio by Truck' by right-clicking on the Sheet1 label on the bottom bar and selecting 'Rename'.
 
  ![A](assets/Tab_3.1.png)

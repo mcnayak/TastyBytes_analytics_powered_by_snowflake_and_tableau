@@ -952,36 +952,33 @@ Note: you may need to use the horizontal bottom scrollbar at the bottom of the w
 
 <br>
 
-Enter the Server name. Change Authentication to “Username and Password”, enter your login credentials, select role ACCOUNTADMIN & then click the blue “Sign in” button.
+Enter the Server name. Note that you will need to remove the 'https://' from the name (see screenshot). You can find the server name [insert instructions here] Change the authentication method to username/password, enter your credentials & then click the blue “Sign in” button.
 
- ![A](assets/Tab_1.4.png)
+ ![A](assets/no_https_in_server_name.png)
 
 <br>
 
 Within the connections pane, make the following selections:
 
-* Warehouse: VHOL_WH
-* Database: VHOL_DATABASE
-* Schema: VHOL_Schema
+* Warehouse: your warehouse
+* Database: FROSTBYTE_TASTY_BYTES
+* Schema: ANALYTICS
 
 
 A list of tables will appear:
 
- ![A](assets/Tab_1.5.png)
+ ![A](assets/select_tables.png)
+
 
 <br>
 
-Hover over the border of the Connections pane window until a black icon appears, then drag the “Connections” window to the right to make it wider. Widen the pane until you can read the full table names. Scroll down in the list of available tables until you find a table called “VHOL_Trips_Stations_Weather_VW”.
-
- ![A](assets/Tab_1.6.png)
+Click and drag the 'ORDERS_V' table where it says “Drag tables here”.
 
 <br>
 
-Drag that table out onto the main section of the screen, where it says “Drag tables here”.
+Next, click and drag the 'DAILY_CITY_WEATHER_V' to the Canvas. This will create a relationship. In Tableau, a relationship is a flexible way to do multi-table analysis without creating one large flat table. Make sure that the fields are mapped correctly by matching 'Date' and 'Date' and matching 'City Name' and 'City'.
 
- ![A](assets/Tab_1.7.png)
-
-<br>
+![A](assets/relationship_map.png)
 
 <!-- ------------------------ -->
 
@@ -991,11 +988,11 @@ Drag that table out onto the main section of the screen, where it says “Drag t
 
 ## Configure Data Source Filters
 
-By adding data source filters, we can exclude any outliers that may hinder performance or skew our data. We are going to be adding 3 data source filters total.
+By adding data source filters, we can exclude any outliers that may hinder performance or skew our data. 
 
 In the top right corner of the screen, locate where it says “Filters”. Under “Filters”, there is a button that says “Add”. Click the “Add” button.
 
- ![A](assets/Tab_2.1.png)
+ ![A](assets/add_data_source_filter_click.png)
 
 <br>
 
@@ -1005,36 +1002,16 @@ On the bottom left of the pop-up “Edit Data Source Filters” window, click �
 
 <br>
 
-Within the pop-up, start typing “Start Station”. Click the “Start Station” field.
-
- ![A](assets/Tab_2.3.png)
+Within the pop-up, start typing “Date”. Click the “Date” field.
 
 <br>
 
-When the list of Station Names appear, click “Null”, then click “Exclude selected values”. After that, click the blue “OK” button in the bottom right of the pop-up.
+When the options for different types of date filters appear, click “Relative Date”, then click “Years” and change the criteria to 'Last 2 Years'. After that, click the blue “OK” button in the bottom right of the pop-up. Then click 'OK' once you see the list of all data source filters.
 
- ![A](assets/Tab_2.4.png)
-
-<br>
-
-Repeat these steps for “End Station”; Add Filter → search “End Station” → click Null → Exclude selected values → OK.
- ![A](assets/Tab_2.5.png)
+ ![A](assets/relative_date_filter_config.png)
 
 <br>
 
-Lastly, repeat the same steps steps for “Start Borough”; Add Filter → search “Start Borough” → click Null → Exclude selected values → OK.
-
- ![A](assets/Tab_2.6.png)
-
-<br>
-
-All 3 Data Source filters should appear within the “Edit Data Source Filters” window, and the “Details” column of the table confirms we are excluding Nulls. Once you’ve confirmed the data source filters have been set correctly, click the blue “OK” button in the bottom right of the “Edit Data Source Filters” window.
-
- ![A](assets/Tab_2.7.png)
-
-<br>
-
-We have successfully filtered out incomplete trips or trips without a documented start borough.
 
 <br>
 
@@ -1044,7 +1021,7 @@ We have successfully filtered out incomplete trips or trips without a documented
 
 <br>
 
-## Visualize Spatial Data
+## Visualize Data
 
 Now we are ready to visualize our data! In the bottom left of the screen, click “Sheet 1”.
 
@@ -1052,53 +1029,183 @@ Now we are ready to visualize our data! In the bottom left of the screen, click 
 
 <br>
 
-Let’s start by creating a simple calculation to count the number of trips in our data set. In the upper toolbar (the toolbar that contains “File”, locate the “Analysis” tab. Within the “Analysis” dropdown, click “Create Calculated Field...”
+We'll start by getting a quick sense of how each city is doing in terms of sales. Drag out Longitude to columns and Latitude to rows to Double click 'City' and 'Country' fields from the 'Orders_v' table. Then click and drag 'Truck Brand Name' to the details tile on the marks card. This will create a map that shows where each of the trucks sell. 
 
- ![A](assets/Tab_3.2.png)
+ ![A](assets/double_click_city_country.png)
 
 <br>
 
-Change the name of the calculation from “Calculation1” to “Trip Journey”. Click into the blank calculation window below; once a flashing cursor appears, type:
+
+Now, this map shows us where we have data, but it doesn't tell us anything about the performance of each of those trucks in cities. Drag Order Total to the size tile on the marks card. You'll see the size of the mark correlate to the sum of order totals for that city. Let's drag Quantity to color, so that we can get a sense of the relationship between the number of items sold and the amount of revenue generated. 
+
+ ![A](assets/add_order_total_to_size.png)
+ 
+ ![A](assets/add_quantity_to_color.png)
+
+<br>
+
+We also want to filter to just one city at a time, because its hard to see the different truck locations when the map is zoomed out. Right-click City on the details tile and select 'Show Filter'. then, when the filter pops up on the right hand side, click the carrot on the right and select 'Single-Value (list)'. This will change the filter settings to only allow you to select one city at a time.
+
+![A](assets/show_filter_city_map.png)
+
+![A](assets/single_value_list.png)
+
+<br>
+
+We can see from clicking through different cities and the size of the circles and the color legend that there seems to be a fairly linear relationship between quantity and order total. We would expect that. Let's create a calculated field that gives us the ratio of products sold vs total revenue. If it's higher, that means that the city is selling more menu items that are less expensive, whereas lower ratio means that the food trucks are selling more expensive items. 
+
+We'll create a calculated field by navigating to the data pane and right clicking on the carrot near the search bar. 
+
+ ![A](assets/create_calculated_field.png)
+
+<br>
+
+Name your calculated field 'Quantity/Order Total Ratio' and enter in the text below:
 
 ```
-MAKELINE([Start Geo],[End Geo])
+SUM([Quantity])/SUM([Order Total])
 ```
+Then, click OK. 
 
-This calculation is creating a line between the station a rider began the ride, and the station a rider ended their ride, effectively plotting the journey they made.
-
-Locate the new “Trip Journey” field within the left Data pane. Immediately after you close the calculated field window, Trip Journey will be highlighted in blue. When a field is blue in Tableau, it means it is a dimension or, in this case, a categorical geographic field.
-
- ![A](assets/Tab_3.3.png)
+ ![A](assets/calculated_field_ratio.png)
 
 <br>
 
-Click and drag the Trip Journey field into the workspace, where it says “drop field here”. Tableau is going to spin for a moment here, but it shouldn’t take more than 45-60 seconds. Not only is this complex spatial data, but it’s the first time Tableau is indexing it or storing it in its cache — this initial ingestion step is the only time it will take this long to render.
+We'll replace the Quantity and Order total fields on the Color and Size marks card with this field. 
 
-Upon rendering, you’ll notice that Tableau not only automatically creates a map for us, but also plots a line between the start location and the end location.
-
- ![A](assets/Tab_3.4.png)
+ ![A](assets/add_ratio_to_color_and_size.png)
 
 <br>
 
-If you hover over the map, you will notice that Tableau is grouping all of the trips together into one single Mark. By adding layers of detail, we can isolate each individual trip.
+Finally, change the color legend so it is more easily distinguishable. Right click the color legend and select 'Edit Colors'. Then, select the Orange-Blue diverging scale. Reverse the colors and close out of the dialog box.
 
-The first Detail we will add is “Start Station”. Locate the “Start Station” field in the Data pane, and drag it onto the “Detail” icon within the Marks card. Tableau will spin for a bit, but it shouldn’t take more than 30-45 seconds to render.
+![A](assets/find_color_legend.png)
 
- ![A](assets/Tab_3.5.png)
+![A](assets/edit_colors.png)
+
+![A](assets/orange_blue_diverging.png)
+
+![A](assets/reversed_legend.png)
+ 
+
+<br>
+
+The reason we reversed the colors is that we want to keep a closer eye on trucks with higher ratios. A higher quantity to order total ratio indicates that folks are buying more, cheaper items, as compared to higher-cost items. Of course, this data set does not include profit information, but it can be something we explore for a potential marketing campaign or GTM study on more expensive items vs more profitable items. 
+
+![A](assets/finished_map.png)
+
+
+Rename the sheet 'Quantity to Order Total Ratio by Truck' by right-clicking on the Sheet1 label on the bottom bar and selecting 'Rename'.
+
+ ![A](assets/Tab_3.1.png)
 
 <br>
 
-Repeat the steps above with “End Station”. Locate the “End Station” field within the Data pane, then drag it onto Detail. Tableau will spin for a bit, but it shouldn’t take more than 30-45 seconds to render.
+Let's open another sheet to do some more analysis. Click the + button on the bottom bar to open a new sheet. Start by visualizing the Sales Data for each city over time. Find the 'Order Total' Field on the left hand pane under the 'Orders_V' table dropdown, and double click the field. This will automatically add the field to the canvas, and visualize it in the most optimal way. In this case, it will sum up the Order Totals and present it in a bar chart. If we translated this to SQL, it would be 'select sum(Order_Totals) from Orders_V'.
 
- ![A](assets/Tab_3.6.png)
+ ![A](assets/drag_order_total_to_rows.png)
+
+<br>
+
+Now, lets start to bucket or group the order totals by another metric. We'll use date in this case. From the left pane, drag the 'Date' field from the 'Orders_V' table to the Columns shelf. You'll see that Tableau automatically aggregates dates up to the year level first. Let's change that to a more granular aggregation, since we are only working with 2 years of data.
+
+ ![A](assets/drag_date_to_columns.png)
+
+
+By clicking the blue pill that says 'Year(Date)', we can see multiple options for aggregating the date. The first set of year/month/day will aggregate in a discrete manner. For example, if we selected 'Month', Tableau would aggregate the Order Totals for all the months of 2021, Jan 2022, Jan 2023, etc. The second set of 'year/month/day' will create a continuous time series of order totals. Let's select 'Week Number' from the 2nd set. You'll see a line chart appear with data on Order Totals from 2022-2023.
+
+ ![A](assets/date_agg_options.png)
+ <br>
+ ![A](assets/change_week_agg.png)
+<br>
+
+Now, let's split out the line chart further and break it down by City. We can add a third field to the visualization by adding 'City' to Color on the marks card. This will break out the data by each city and assign it a different color. You'll see the legend on the right hand side pop up. Let's also rename this sheet by clicking on the 'Sheet 2' label on the bottom bar and renaming it 'City Sales by Week'.
+
+ ![A](assets/rename_sheet1.png)
 
 <br>
 
-Now hover over any of the marks on the map. You will see we’ve effectively isolated the different trips, creating a mark for each journey.
+Looking at this line graph, here's more than one city with a massive drop in sales in March. These are Berlin, New York City, and Hamburg (Hamburg which we already visualized in snowflake). Let's add a filter so that I can narrow it down to those three cities. Drag the 'City' field to the filters card. When the filter card pops up, select just a few cities, including Berlin, NYC and Hamburg. Paris had a few fluctuations in sales as well, so we can select the field as well.
 
- ![A](assets/Tab_3.7.png)
 
 <br>
+
+Great. Let's see if they also had high wind speed during those days and months with lower sales. Duplicate the sheet by right-clicking the bar along the bottom and selecting 'Duplicate'. Then, make sure that max wind speed is averaged by right clicking the field and selecitng 'Data properties' -> 'Aggregation' -> Avg. Then, drag out the 'Max Wind Speed' field to Rows. This may take a few minutes to render.
+
+ ![A](assets/default_aggregation.png)
+
+ ![A](assets/add_avg_wind_speed.png)
+
+
+
+<br>
+
+We can see that the avg wind speed does seem to have somewhat of a negative correlation with order totals. In order to further investigate the pattern, we can actually very quickly check the trends of the lines by reversing the axis. Right-click the y-axis for the wind speed, go to 'Edit Axis' and checked the 'reversed' box. You may expect the wind speed line to look similar to the Order Totals line.
+
+  ![A](assets/reversed_axis.png)
+
+<br>
+
+It doesn't seem to look very similar, and there's also some null values - NYC has no wind speed data. We can make a note to ask my data engineers about that later. Remove the Wind Speed field and the city filter from the visualization. Change the field from 'City' to 'Truck Brand Name' to get a sense of how the trucks are performing over time. Rename the sheet 'Truck Performance over Time'.
+
+![A](assets/Truck_Performance_over_Time.png)
+
+<br>
+
+Now, let's look some of the most popular products. We'll measure by the quantity ordered. Open a new sheet, then drag 'Quantity' out onto the columns shelf. 
+ ![A](assets/drag_out_quantity.png)
+
+ <br>
+
+ Drag 'Menu Item Name' onto the rows shelf and sort the sheet by descending quantity. You can just click the sort icon next to Quantity label at the bottom.
+
+ ![A](assets/drag_out_menu_item_name.png)
+
+ <br>
+ 
+Then,  exclude the top three items, Ice Tea, Bottled Soda and Bottled Water, since they are constants at every food truck. Do that by using command-click on both of the items, then selecting 'Exclude'.
+
+![A](assets/exclude_drinks.png)
+  
+<br>
+
+Let's also change the way the data is visualized. A bar chart is great, but ultimately, since the numbers are so high, the differences in bar lengths are a difficult to gague. we also need to add a label so that we can see the nuances between some of the top selling products. Drag another copy of sum(Quantity) to the label square on the marks card to add more detail.
+
+![A](assets/quantity_label_marks_card.png)
+
+<br>
+
+Next up we'll filter to just the top 10 products. The Menu Item Name pill is already on the filter card, so right click and select 'Edit Filter' to open it up. Navigate to the 'Top' tab and select 'By Field', then make sure that the filter grabs the top 10 by quantity. Click OK. Rename the sheet 'Top Selling Menu Items'.
+
+  ![A](assets/edit_filter.png)
+  
+  ![A](assets/top_10_products_filter.png)
+  
+ ![A](assets/rename_top_selling_products.png)
+ 
+
+Finally, Let's look at truck performance across all cities. To do that, we'll measure performance by total sales, or 'Order Total' field. Drag out the 'Order Total' field onto the columns shelf. 
+
+ ![A](assets/reversed_axis.png)
+<br>
+
+Then, click and drag 'Truck Brand Name' to the rows shelf. Add a label to the bar charts, same as we did for the Top Selling Product sheet. Drag Order Totals to the labels tile on the marks card. Sort the sheet.
+
+![A](assets/drag_out_truck.png)
+
+![A](assets/truck_with_labels.png)
+
+<br>
+
+Filter the truck performance to the top 5 trucks. Do the same thing as for products, but just grab the top 5 by Order Total for truck names.
+
+ ![A](assets/truck_top_5_filter.png)
+
+Rename the sheet 'Food Truck Performance by Total Revenue'.
+
+ ![A](assets/finish_top_selling_products.png)
+ ![A](assets/finish_top_trucks_bar.png)
+
 
 <!-- ------------------------ -->
 
@@ -1106,353 +1213,27 @@ Now hover over any of the marks on the map. You will see we’ve effectively iso
 
 <br>
 
-## Add KPIs to the Tooltip
+## Create a Dashboard
 
-The white box that appears when you hover over a mark on a view within a Tableau worksheet or Tableau dashboard is called a “Tooltip”. As you build in Tableau, you have the flexibility and autonomy to customize Tooltips as you see fit.
+We have all of this information, but lets put it all together to see if we can gain insights from looking at all of the separate information in one place. Click on the waffle icon in the bottom bar to create a new dashboard.
 
-Currently, our Tooltip only contains **Start Station** and **End Station**, and it isn’t formatted super intuitively. Let’s add a few other interesting metrics, then adjust the formatting to read more like a sentence.
+Just like fields dragged onto the canvas, you can drag sheets onto the dashboard to compose them. Let's drag our Time series with just order totals out, our map of Quantity/Order Total Ratio by city, then drag out 'Top Selling Products' and 'Food Truck Performance by Total Revenue' sheets. Finally, in order to make sure the filters carry over, apply the City filter with the single list to all sheets using this data source. To do that, simply click the carrot icon on the selected City filter, then click 'Apply to Worksheets' -> 'All using this datasource'. 
 
-We'll begin by writing another calculation. Within the “Analysis” dropdown, click “Create Calculated Field...”
+ ![A](assets/apply_data_source_filter.png)
 
- ![A](assets/Tab_4.1.png)
+Interesting. The most frequently sold items are not part of the top food truck's menu. Next, we might want to speak to the data engineers on the Snowflake team to add profit to the data source for future analysis on most profitable items vs most profitable trucks. Rename the dashboard 'Tasty Bytes Sales Analysis'. Click the checkbox in the bottom left corner that says 'Show dashboard title'.
 
-<br>
-
-Rename the field from “Calculation 1” to “Number of Trips”. Click into the blank calculation window below; once a flashing cursor appears, type:
-
-```
-CountD([Tripid])
-```
-
-Click the blue “OK” button on the bottom right of the calculated field window.
-
-Locate the new “Number of Trips” field within the left Data pane. When you close the calculated field window, the “Number of Trips” field will be highlighted in green.
-
-Click and drag “Number of Trips” onto the “Tooltip” icon within the Marks card.
-
- ![A](assets/Tab_4.2.png)
+ ![A](assets/finished_dash.png)
 
 <br>
 
-Next, locate the “Duration” field. As you did with “Number of Trips”, drag and drop “Duration” onto the “Tooltip” icon within the Marks card.
+Let's publish this dashboard to share this insight and feedback with others. Click 'Publish As' in the top right hand corner. Give your Dashboard a name and you can store it in your personal space for now. Once you click save, the published dashboard should reload. 
 
-When Duration is dropped on Tooltip,  you’ll notice Tableau sets the aggregation to SUM(). In our case, we actually do not want to find the sum, we want to find the average. Fortunately, Tableau makes it easy to alter the aggregation type. Simply hover over the green SUM(Duration) field within the Marks card until an arrow appears in the right corner of the field. Click that arrow to open a drop-down menu and change “Measure” from **Sum** to **Average**.
+ ![A](assets/publish_as.png)
 
- ![A](assets/Tab_4.3.png)
+ ![A](assets/name_workbook.png)
 
-<br>
 
-Now hover over any of the lines on the map. You’ll notice the Tooltip now contains the number of trips taken and the average duration of each trip in minutes.
-
- ![A](assets/Tab_4.4.png)
-
-<br>
-
-As I mentioned, Tooltips can easily be reformatted. Click the Tooltip icon within the Marks card to open a rich text editor.
-
- ![A](assets/Tab_4.5.png)
-
-<br>
-
-Within the “Edit Tooltip” window, highlight all of the auto-populated text and delete it. (Don’t worry, it isn’t gone forever, we’re just going to present the information differently).
-
-In the blank window, type or paste:
-
-```
-“*<AGG(Number of Trips)>* people rode a CitiBike from *<Start Station>* to *<End Station>*.
-On average, this trip took *<AVG(Duration)> minutes* to complete.”
-```
-
-Make sure to bold all of the field names before hitting the blue “OK” button at the bottom of the window.
-
- ![A](assets/Tab_4.6.png)
-
-<br>
-
-<!-- ------------------------ -->
-
-<!-- ------------------------ -->
-
-<br>
-
-## Handle Map Layers
-
-Now, we can add Map Layers.
-
-Locate the “Start Geo” field in the Data pane, and drag it into the view, directly on top of our existing map. You’ll notice a “Map Layers” icon appears in the top left corner of the Map. Drag the “Start Geo” field onto that button, making sure to release the field only when the Map Layers icon is highlighted in orange.
-
- ![A](assets/Tab_5.1.png)
-
-<br>
-
-Repeat this process with the “End Geo” field.
-
- ![A](assets/Tab_5.2.png)
-
-<br>
-
-Let’s pause and assess our map. We now have a line representing the journey each rider took, a dot where they started, and a dot where they ended.
-
-You’ll notice that within the Marks card, Tableau has isolated all three of our Map layers: Start Geo, End Geo, and Trip Journey.
-
- ![A](assets/Tab_5.3.png)
-
-<br>
-
-We can reorder these layers via simple drag and drop.  Let’s move ”Start Geo“ above ”End Geo“. Click the ”Start Geo“ tab and drag it above the ”End Geo“ tab.
-
- ![A](assets/Tab_5.4.png)
-
-
-### Format Map Layers
-
-Select the “Start Geo” section of the Marks card, then click the “Color” button within the “Start Geo” Marks card.
-
- ![A](assets/Tab_6.1.png)
-
-<br>
-
-At the top of the “Color” pop-up menu, click the lightest shade of *blue*. At the bottom of the “Color” pop-up, click into the “Halo” drop-down. Within this menu, select the darkest shade of *blue*. The marks on the map update immediately.
-
- ![A](assets/Tab_6.2.png)
-
-<br>
-
-Next, let’s customize the “End Geo” map layer to differentiate the starting point from the ending point.
-
-Select the “End Geo” section of the Marks card, then click the “Color” icon. At the top of the “Color” pop-up menu, click the lightest shades of *orange*. At the bottom of the “Color” pop-up, click into the “Halo” drop-down. Within this menu, select the darkest shade of *orange*. Again, the marks on the map update immediately.
-
- ![A](assets/Tab_6.3.png)
-
-<br>
-
-The last Map Layer to customize is “Trip Journey”. Select the “Trip Journey” section of the Marks card, then click the “Color” icon. At the top of the “Color” pop-up, click the second to lightest shade of gray.
-
- ![A](assets/Tab_6.4.png)
-
-<br>
-
-Now, click the “Size” icon directly to the right of the “Color” icon. Drag the Size slider to the left, decreasing the Mark Size by approximately 50%.
-
- ![A](assets/Tab_6.5.png)
-
-
-### Enhance the Map with Custom Backgrounds
-
-Within the top toolbar directly to the right of “Analysis”, click into the “Map” tab.
-
-Hover over the first option in the pop-up drop-down, “Background Maps”, and change the selection from “Light” to “Normal”. You’ll notice we now have color and shading to help us differentiate streets from water and landmarks.
-
- ![A](assets/Tab_7.1.png)
-
-<br>
-
-Go back to the “Map” tab in the top toolbar. This time, click into “Background Layers...”. Tableau comes packaged with a wide variety of background map details for you to enable or disable as you choose. In our case, let’s add “Streets, Highways, Routes” to our view. Simply click that checkbox within the list.
-
- ![A](assets/Tab_7.2.png)
-
-<br>
-
-Exit the “Background Layers” pane by clicking the “X” on the top right. Clicking this X will bring you back to the familiar Data pane.
-
-<br>
-
-<!-- ------------------------ -->
-
-<!-- ------------------------ -->
-
-<br>
-
-## Format Worksheet Title & Add Filter
-
-Now, let’s format the title of this worksheet! Much like you can do with Tooltips, you have the ability to customize and integrate key fields or metrics in your title as well.
-
-There are two fields I would like to add to our title that isn’t currently in our view: start time and average temperature.
-
-To incorporate these fields into the view, start by clicking into the “Start Geo” tab within the Marks card.
-
- ![A](assets/Tab_8.1.png)
-
-<br>
-
-Locate the “Starttime” field within the Data pane, then drag that field onto the “Detail” icon within the Marks card.
-
- ![A](assets/Tab_8.2.png)
-
-<br>
-
-You’ll notice that Tableau automatically groups the dates by year. While rolling up to a yearly level may be helpful in some cases, it isn’t what we want here.
-
-To alter this, hover over the blue YEAR(Starttime) field within the Marks card until an arrow appears in the right corner of the field. Click that arrow to open a drop-down menu.
-
-Within the menu, select the *second* “Month” option from the lower section of the drop-down.
-
- ![A](assets/Tab_8.3.png)
-
-<br>
-
-Next, locate the “Temp Avg F” field within the Data pane, then drag that field onto the “Detail” icon within the Marks card.
-
-Just like “Duration“, Tableau set the aggregation to sum. To change it to average, simply hover over the green SUM(Temp Avg F) field within the Marks card until an arrow appears in the right corner of the field. Click that arrow to open a drop-down menu and change “Measure” from Sum to Average.
-
- ![A](assets/Tab_8.4.png)
-
-<br>
-
-Now, double click where it says “Sheet 1” above the map. This will open a rich text editor.
-
-Delete “Sheet 1” and type or paste:
-
-```
-CitiBike Bike Rides in <MONTH(Starttime)> (Avg Temp: <AVG(Temp Avg F)> °F) <br>
-The dark gray lines represent *trip* *journeys*, the blue dots represent the *Start Station*, and the orange dots represent the *End Station*. Hover over any line to see the number of trips taken and the average trip time in minutes.
-```
-
-Highlight “CitiBike Bike Rides in <MONTH(Starttime)> (Avg Temp: <AVG(Temp Avg F)> °F)” and change the font size to *20*.
-
-Highlight “The dark gray lines represent *trip* *journeys*, the blue dots represent the *Start Station*, and the orange dots represent the *End Station*. Hover over any line to see the number of trips taken and the average trip time in minutes.“ and change the font size to *12*.
-
- ![A](assets/Tab_8.5.png)
-
-<br>
-
-Finally, let’s add a filter into our view.
-
-Locate the “Start Borough” field within the Data pane, then drag that field onto the Filters card.
-
- ![A](assets/Tab_8.6.png)
-
-<br>
-
-In the pop-up “Filter \[Start Borough\]” menu, select (All) then hit the blue “OK” button.
-
- ![A](assets/Tab_8.7.png)
-
-<br>
-
-On the bottom left of the screen, right click where it says “Sheet 1” and select “Rename” from the menu. Update the Sheet name to “Map”.
-
- ![A](assets/Tab_8.8.png)
-
-<br>
-
-<!-- ------------------------ -->
-
-<!-- ------------------------ -->
-
-<br>
-
-## Publish a Simple Dashboard
-
-Click the middle icon on the bottom banner.
-
-The first thing we are going to do adjust our dashboard size. On the far left of the screen, you’ll notice that the *Data* pane has been replaced with the *Dashboard* pane — that’s how you can confirm you are authoring a dashboard, not a worksheet.
-
-To change the size of the dashboard, find the “Size” section within the Dashboard pane and click where it says “Desktop Browser (1000 x 800)”.
-
-Alter the dashboard sizing accordingly:
-
-* Width *1150*
-* Height *700*
-
-
-Locate the “Maps” worksheet under the “Sheets” section of the Dashboard pane. Click and drag that worksheet into the workspace, releasing where it says “Add sheets here”. If we had made more than one worksheet, you would repeat this process until all of the desired sheets were added to your dashboard.
-
- ![A](assets/Tab_9.1.png)
-
-<br>
-
-We’re done! Right click on “Dashboard 1” and rename it “CitiBike”. Click the blue “Publish” button at the top of the screen. Name the Workbook “CitiBike” and, under Location, select your “default” folder. When you’re done, hit the blue “Publish” button at the bottom of the screen to.
-
- ![A](assets/Tab_9.2.png)
-
-<br>
-
-After it finishes processing your request, the dashboard will load and a pop-up message will appear at the top of the screen. Within that message, click “Go to workbook”.
-
- ![A](assets/Tab_9.3.png)
-
-<br>
-
-Select “CitiBike” to load the dashboard.
-
- ![A](assets/Tab_9.4.png)
-
-<br>
-
-<!-- ------------------------ -->
-
-<!-- ------------------------ -->
-
-<br>
-
-### Embed the Dashboard into a Web Page
-
-Click the white “Share” button at the top right of the screen.
-
- ![A](assets/Tab_10.1.png)
-
-<br>
-
-Under “Share using a link”, click “Copy Link”.
-
- ![A](assets/Tab_10.2.png)
-
-<br>
-
-As a prerequisite, you were instructed to download a text editor called Visual Studio Code (VS Code). Open that Application.
-
- ![A](assets/Tab_10.3.png)
-
-<br>
-
-Locate the  “Tableau Embedded Portal” folder we provided at the begging on this lab.
-
- ![A](assets/Tab_10.4.png)
-
-<br>
-
-Open the “Tableau Embedded Portal” folder in VS Code by clicking “Open” on the “Get Started” window and then selecting the folder name, or by simply dragging the folder into the VS Code window.
-
- ![A](assets/Tab_10.5.png)
-
-<br>
-
-Once you’ve opened the folder in VS Code, you’ll notice two key files: dashboard.html and embed.js. Within the lefthand “Explorer” pane, click to open the *embed.js* file.
-
- ![A](assets/Tab_10.6.png)
-
-<br>
-
-On line 8 where the annotations prompt you to “PASTE LINK HERE“, paste the embed link we copied from Tableau Online. After pasting, save your changes using File → Save.
-
- ![A](assets/Tab_10.7.png)
-
-<br>
-
-Now within the “Explorer” pane, right click on “dashboard.html” and select “Open in Default Browser” from the drop-down menu. This will open the webpage you just embedded your Tableau dashboard into.
-
- ![A](assets/Tab_10.8.png)
-
-<br>
-
-Now we can not only view our Tableau dashboard within an external webpage, but we can actually interact with it!
-
- ![A](assets/Tab_10.9.png)
-
-<br>
-
-Remember when we added the “Start Borough” field into our worksheet in Tableau Online? By doing that, we told Tableau we want to use that field as a filter. This enables us to leverage Tableau’s JavaScript API to translate the selections we make within a webpage into filters within Tableau.
-
-In the left pane of the webpage, click “Start Borough”. Select “Brooklyn” within the “Start Boroughs” filter menu. That selection will be passed into Tableau.
-
- ![A](assets/Tab_10.10.png)
-
-<br>
-
-The dashboard will zoom and filter, showing us only trips that started in Brooklyn.
-
- ![A](assets/Tab_10.11.png)
 
 <br>
 
@@ -1469,7 +1250,7 @@ The dashboard will zoom and filter, showing us only trips that started in Brookl
 
 Congratulations! you have completed the lab.
 
-In this lab we captured semi-structured data coming from NewYork Citibikes, enriched that data with geospatial data, and weather data from  Snowflake Data marketplace data to find correlation between demand for bicycles and weather. We visualized the data using Tableau to quickly arrive at relevant insights.
+In this lab we captured semi-structured data coming from TastyBytes food truck data, enriched that data with geospatial data, and weather data from Snowflake Data marketplace data to find correlation between food sales and weather. We visualized the data using Tableau to quickly arrive at new insights.
 
 [Semi-structured Data](https://docs.snowflake.com/en/user-guide/semistructured-concepts.html)
 <br>
